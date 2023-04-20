@@ -1,0 +1,49 @@
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        $('#ORDERNO').val(Math.floor(Math.random() * 10000000));
+    });
+
+    function fn_readyCall() {
+        $.ajax({
+            type: "POST",
+            url: '/Home/ReadyCall',
+            data: $('#payform').serializeArray(),
+            success: function (data) {
+                if (typeof data.RTN_MSG == 'undefined') {
+                    const newDiv = document.createElement('div');
+                    newDiv.setAttribute("id", "cookiepayform");
+                    document.body.appendChild(newDiv);
+                    $("#cookiepayform").html(data);
+                } else {
+                    alert(data.RTN_MSG);
+                    return false;
+                }
+            }
+        });
+    }
+</script>
+<div style="margin-top: 50px;">
+    <h3 style="margin-bottom: 50px;">인증결제 요청(서버호출)</h3>
+    <button type="button" class="btn btn-success" onclick="fn_readyCall();">결제요청</button>
+</div>
+<div style="border-bottom: 1px solid black; margin: 10px 0px;"></div>
+<div>
+    <form id="payform" name="payform" method="post">
+        <div class="div-result"><input type="text" class="form-control" name="ORDERNO" id="ORDERNO" placeholder="주문번호"></div>
+        <div class="div-result"><input type="text" class="form-control" name="PRODUCTNAME" id="PRODUCTNAME" placeholder="상품명"></div>
+        <div class="div-result"><input type="text" class="form-control" name="AMOUNT" id="AMOUNT" placeholder="금액"></div>
+        <div class="div-result"><input type="text" class="form-control" name="BUYERNAME" id="BUYERNAME" placeholder="고객명"></div>
+        <div class="div-result"><input type="text" class="form-control" name="BUYEREMAIL" id="BUYEREMAIL" placeholder="고객 e-mail"></div>
+        <div class="div-result"><input type="text" class="form-control" name="PAYMETHOD" id="PAYMETHOD" placeholder="결제수단" value="CARD"></div>
+        <div class="div-result"><input type="text" class="form-control" name="PRODUCTCODE" id="PRODUCTCODE" placeholder="상품 코드"></div>
+        <div class="div-result"><input type="text" class="form-control" name="BUYERID" id="BUYERID" placeholder="고객 ID"></div>
+        <div class="div-result"><input type="text" class="form-control" name="BUYERADDRESS" id="BUYERADDRESS" placeholder="고객 주소"></div>
+        <div class="div-result"><input type="text" class="form-control" name="BUYERPHONE" id="BUYERPHONE" placeholder="고객 휴대폰번호"></div>
+        <div class="div-result"><input type="text" class="form-control" name="RETURNURL" id="RETURNURL" placeholder="결제 완료 후 리다이렉트 url"></div>
+        <div class="div-result"><input type="text" class="form-control" name="ETC1" id="ETC1" placeholder="사용자 추가필드 1" value=""></div>
+        <div class="div-result"><input type="text" class="form-control" name="ETC2" id="ETC2" placeholder="사용자 추가필드 2" value=""></div>
+        <div class="div-result"><input type="text" class="form-control" name="ETC3" id="ETC3" placeholder="사용자 추가필드 3" value=""></div>
+        <div class="div-result"><input type="text" class="form-control" name="ETC4" id="ETC4" placeholder="사용자 추가필드 4" value=""></div>
+        <div class="div-result"><input type="text" class="form-control" name="ETC5" id="ETC5" placeholder="사용자 추가필드 5" value=""></div>
+    </form>
+</div>

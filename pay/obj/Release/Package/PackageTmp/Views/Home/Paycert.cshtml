@@ -1,0 +1,37 @@
+﻿<script>
+    function fn_paycertCall() {
+        $.ajax({
+            type: "POST",
+            url: '/Home/PaycertCall',
+            data: { TID: $('#TID').val() },
+            success: function (data) {
+                const json = JSON.parse(data);
+                let html = '';
+                html += '<div class="div-result"><span class="label-text">주문번호: </span>' + json.ORDERNO + '</div>';
+                html += '<div class="div-result"><span class="label-text">금액: </span>' + json.AMOUNT + '</div>';
+                html += '<div class="div-result"><span class="label-text">주문자명: </span>' + json.BUYERNAME + '</div>';
+                html += '<div class="div-result"><span class="label-text">주문자이메일: </span>' + json.BUYEREMAIL + '</div>';
+                html += '<div class="div-result"><span class="label-text">주문자아이디: </span>' + json.BUYERID + '</div>';
+                html += '<div class="div-result"><span class="label-text">상품명: </span>' + json.PRODUCTNAME + '</div>';
+                html += '<div class="div-result"><span class="label-text">상품코드: </span>' + json.PRODUCTCODE + '</div>';
+                html += '<div class="div-result"><span class="label-text">TID: </span>' + json.TID + '</div>';
+                html += '<div class="div-result"><span class="label-text">승인번호: </span>' + json.ACCEPTNO + '</div>';
+                html += '<div class="div-result"><span class="label-text">승인일자: </span>' + json.ACCEPTDATE + '</div>';
+                html += '<div class="div-result"><span class="label-text">취소일자: </span>' + json.CANCELDATE + '</div>';
+                html += '<div class="div-result"><span class="label-text">취소사유: </span>' + json.CANCELMSG + '</div>';
+
+                $('#data').html(html);
+            }
+        });
+    }
+</script>
+<div style="margin-top: 50px;">
+    <h3 style="margin-bottom: 50px;">결제검증 요청</h3>
+    <div style="display:flex;">
+        <div class="div-label">TID</div>
+        <input type="text" id="TID" name="TID" class="form-control"/>
+        <button type="button" class="btn btn-success" onclick="fn_paycertCall()" style="margin-left: 10px;">검증요청</button>
+    </div>
+    <div style="border-bottom: 1px solid black; margin: 10px 0px;"></div>
+    <div id="data" style="margin-top: 10px;"></div>
+</div>

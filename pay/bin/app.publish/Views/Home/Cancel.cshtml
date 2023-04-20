@@ -1,0 +1,33 @@
+﻿<script>
+    function fn_cancel() {
+        $.ajax({
+            type: "POST",
+            url: '/Home/CancelCall',
+            data: { TID: $('#TID').val(), REASON: $('#REASON').val() },
+            success: function (data) {
+                const json = JSON.parse(data);
+                let html = '';
+                if (json.cancel_code == '0000') {
+                    html += '<div class="div-result"><span class="label-text">취소TID: </span>' + json.cancel_tid + '</div>';
+                    html += '<div class="div-result"><span class="label-text">취소일자: </span>' + json.cancel_date + '</div>';
+                    html += '<div class="div-result"><span class="label-text">취소금액: </span>' + json.cancel_amt + '</div>';
+                } else {
+                    alert(json.cancel_msg);
+                }
+                $('#data').html(html);
+            }
+        });
+    }
+</script>
+<div style="margin-top: 50px;">
+    <h3 style="margin-bottom: 50px;">결제취소 요청</h3>
+    <div style="display:flex;">
+        <div class="div-label">TID</div>
+        <input type="text" id="TID" name="TID" class="form-control" />
+        <div class="div-label">취소사유</div>
+        <input type="text" id="REASON" name="REASON" class="form-control" />
+        <input type="button" class="btn btn-success" value="취소요청" onclick="fn_cancel()" style="margin-left: 10px;" />
+    </div>
+    <div style="border-bottom: 1px solid black; margin: 10px 0px;"></div>
+    <div id="data" style="margin-top: 10px;"></div>
+</div>

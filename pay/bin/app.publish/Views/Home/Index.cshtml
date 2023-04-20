@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<script src="https://code.jquery.com/jquery-3.6.4.slim.js" integrity="sha256-dWvV84T6BhzO4vG6gWhsWVKVoa4lVmLnpBOZh/CAHU4=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#ORDERNO').val(Math.floor(Math.random() * 10000000));
+    });
+
+    function pay() {
+        let data = {
+            API_ID: 'sandbox_pcm2jg05',
+            ORDERNO: $("#ORDERNO").val(), //주문번호 (필수)
+            PRODUCTNAME: $("#PRODUCTNAME").val(), //상품명 (필수)
+            AMOUNT: $("#AMOUNT").val(), //결제 금액 (필수)
+            BUYERNAME: $("#BUYERNAME").val(), //고객명 (필수)
+            BUYEREMAIL: $("#BUYEREMAIL").val(), //고객 e-mail (필수)
+            PAYMETHOD: $("#PAYMETHOD").val(), //결제 수단 (선택)
+            PRODUCTCODE: $("#PRODUCTCODE").val(), //상품 코드 (선택)
+            BUYERID: $("#BUYERID").val(), //고객 아이디 (선택)
+            BUYERADDRESS: $("#BUYERADDRESS").val(), //고객 주소 (선택)
+            BUYERPHONE: $("#BUYERPHONE").val(), //고객 휴대폰번호 (선택, 웰컴페이는 필수)
+            RETURNURL: $("#RETURNURL").val(), //결제 완료 후 리다이렉트 url (필수)
+            ETC1: $("#ETC1").val(), //사용자 추가필드1 (선택)
+            ETC2: $("#ETC2").val(), //사용자 추가필드2 (선택)
+            ETC3: $("#ETC3").val(), //사용자 추가필드3 (선택)
+            ETC4: $("#ETC4").val(), //사용자 추가필드4 (선택)
+            ETC5: $("#ETC5").val(), //사용자 추가필드5 (선택)
+        };
+
+        $.ajax({
+            type: "POST",
+            url: 'https://sandbox.cookiepayments.com/pay/ready',
+            data: data,
+            cache: false,
+            contentType: 'application/x-www-form-urlencoded',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("ApiKey", '0cfcc7d91408924b0a3450f86b99e808db7729aaab90678256');
+            },
+            success: function (data) {
+                if (typeof data.RTN_MSG == 'undefined') {
+                    const newDiv = document.createElement('div');
+                    newDiv.setAttribute("id", "cookiepayform");
+                    document.body.appendChild(newDiv);
+                    $("#cookiepayform").html(data);
+                } else {
+                    alert(data.RTN_MSG);
+                    return false;
+                }
+            }
+        });
+    }
+
+</script>
+<div>
+    <div style="margin-top: 50px;">
+        <h3 style="margin-bottom: 50px;">인증결제 요청(웹호출)</h3>
+        <button type="button" class="btn btn-success" onclick="pay();">결제요청</button>
+    </div>
+    <div style="border-bottom: 1px solid black; margin: 10px 0px;"></div>
+    <div>
+        <form name="payform" method="post">
+            <div class="div-result"><input type="text" class="form-control" name="ORDERNO" id="ORDERNO" placeholder="주문번호"></div>
+            <div class="div-result"><input type="text" class="form-control" name="PRODUCTNAME" id="PRODUCTNAME" placeholder="상품명"></div>
+            <div class="div-result"><input type="text" class="form-control" name="AMOUNT" id="AMOUNT" placeholder="금액"></div>
+            <div class="div-result"><input type="text" class="form-control" name="BUYERNAME" id="BUYERNAME" placeholder="고객명"></div>
+            <div class="div-result"><input type="text" class="form-control" name="BUYEREMAIL" id="BUYEREMAIL" placeholder="고객 e-mail"></div>
+            <div class="div-result"><input type="text" class="form-control" name="PAYMETHOD" id="PAYMETHOD" placeholder="결제수단" value="CARD"></div>
+            <div class="div-result"><input type="text" class="form-control" name="PRODUCTCODE" id="PRODUCTCODE" placeholder="상품 코드"></div>
+            <div class="div-result"><input type="text" class="form-control" name="BUYERID" id="BUYERID" placeholder="고객 ID"></div>
+            <div class="div-result"><input type="text" class="form-control" name="BUYERADDRESS" id="BUYERADDRESS" placeholder="고객 주소"></div>
+            <div class="div-result"><input type="text" class="form-control" name="BUYERPHONE" id="BUYERPHONE" placeholder="고객 휴대폰번호"></div>
+            <div class="div-result"><input type="text" class="form-control" name="RETURNURL" id="RETURNURL" placeholder="결제 완료 후 리다이렉트 url"></div>
+            <div class="div-result"><input type="text" class="form-control" name="ETC1" id="ETC1" placeholder="사용자 추가필드 1" value=""></div>
+            <div class="div-result"><input type="text" class="form-control" name="ETC2" id="ETC2" placeholder="사용자 추가필드 2" value=""></div>
+            <div class="div-result"><input type="text" class="form-control" name="ETC3" id="ETC3" placeholder="사용자 추가필드 3" value=""></div>
+            <div class="div-result"><input type="text" class="form-control" name="ETC4" id="ETC4" placeholder="사용자 추가필드 4" value=""></div>
+            <div class="div-result"><input type="text" class="form-control" name="ETC5" id="ETC5" placeholder="사용자 추가필드 5" value=""></div>
+        </form>
+    </div>
+</div>

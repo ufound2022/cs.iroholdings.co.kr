@@ -1,0 +1,52 @@
+﻿<script>
+    $(document).ready(function () {
+        $('#ORDERNO').val(Math.floor(Math.random() * 10000000));
+    });
+
+    function fn_keyin() {
+        $.ajax({
+            type: "POST",
+            url: '/Home/KeyinCall',
+            data: $('#payform').serializeArray(),
+            success: function (data) {
+                const json = JSON.parse(data);
+                let html = '';
+                if (json.RESULTCODE == '0000') {
+                    html += '<div class="div-result"><span class="label-text">주문번호: </span>' + json.ORDERNO + '</div>';
+                    html += '<div class="div-result"><span class="label-text">금액: </span>' + json.AMOUNT + '</div>';
+                    html += '<div class="div-result"><span class="label-text">TID: </span>' + json.TID + '</div>';
+                    html += '<div class="div-result"><span class="label-text">승인번호: </span>' + json.ACCEPTNO + '</div>';
+                    html += '<div class="div-result"><span class="label-text">할부개월: </span>' + json.QUOTA + '</div>';
+                    html += '<div class="div-result"><span class="label-text">카드명: </span>' + json.CARDNAME + '</div>';
+                    html += '<div class="div-result"><span class="label-text">임시주문번호: </span>' + json.TEMP_ORDERNO + '</div>';
+                    html += '<div class="div-result"><span class="label-text">RECEIPT_URL: </span>' + json.RECEIPT_URL + '</div>';
+                } else {
+                    alert(json.RESULTMSG);
+                }
+                $('#data').html(html);
+            }
+        });
+    }
+</script>
+<div style="margin-top: 50px;">
+    <h3 style="margin-bottom: 50px;">비인증결제(KEY-IN) 요청</h3>
+    <button type="button" class="btn btn-success" onclick="fn_keyin();">결제요청</button>
+</div>
+<div style="border-bottom: 1px solid black; margin: 10px 0px;"></div>
+<div>
+    <form id="payform" name="payform" method="post">
+        <div class="div-result"><input type="text" class="form-control" name="ORDERNO" id="ORDERNO" placeholder="주문번호"></div>
+        <div class="div-result"><input type="text" class="form-control" name="PRODUCTNAME" id="PRODUCTNAME" placeholder="상품명"></div>
+        <div class="div-result"><input type="text" class="form-control" name="AMOUNT" id="AMOUNT" placeholder="금액"></div>
+        <div class="div-result"><input type="text" class="form-control" name="BUYERNAME" id="BUYERNAME" placeholder="고객명"></div>
+        <div class="div-result"><input type="text" class="form-control" name="BUYEREMAIL" id="BUYEREMAIL" placeholder="고객 e-mail"></div>
+        <div class="div-result"><input type="text" class="form-control" name="CARDNO" id="CARDNO" placeholder="카드번호"></div>
+        <div class="div-result"><input type="text" class="form-control" name="EXPIREDT" id="EXPIREDT" placeholder="유효기간(YYMM)"></div>
+        <div class="div-result"><input type="text" class="form-control" name="BUYERID" id="BUYERID" placeholder="고객 ID"></div>
+        <div class="div-result"><input type="text" class="form-control" name="BUYERPHONE" id="BUYERPHONE" placeholder="고객 휴대폰번호"></div>
+        <div class="div-result"><input type="text" class="form-control" name="QUOTA" id="QUOTA" placeholder="할부개월(00,01)"></div>
+        <div class="div-result"><input type="text" class="form-control" name="CARDPWD" id="CARDPWD" placeholder="비밀번호 앞두자리"></div>
+        <div class="div-result"><input type="text" class="form-control" name="CARDAUTH" id="CARDAUTH" placeholder="생년월일(YYMMDD)" value=""></div>
+    </form>
+</div>
+<div id="data" style="margin-top: 10px;"></div>
