@@ -13,7 +13,7 @@
 ## 쿠키페이 C# 샘플소스 다운로드후 설치 실행과정 ##
 
 
-1. 쿠키 페이 C# GIT : https://github.com/ufound2022/cs.iroholdings.co.kr > 샘플 소스를 다운로드합니다.
+1. 쿠키 페이 C# GIT : https://github.com/ufound2022/csharp.cookiepayments.com.git > 샘플 소스를 다운로드합니다.
 2. Visual Studio Code 2019 설치프로그램 실행 > 다운받은 파일 압축해제후 > Visual Studio 2019 폴더에서 실행합니다.
 3. vsc2019 설치화면이 로딩되면 > ASP.NET및 웹개발 체크 > 설치세부 정보에서 > .net framework 4.6.2 를 선택후 > 우측하단 설치를 클릭합니다.
 4. 설치된 Visual Studio Code 를 관리자 권한으로 실행합니다.
