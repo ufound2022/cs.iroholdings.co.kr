@@ -1,6 +1,4 @@
-# cs.iroholdings.co.kr
-
-쿠키페이 API C# 샘플소스 Ver 1.0
+# 쿠키페이 API C# 샘플소스 Ver 1.0
 
 언어 : C# 
 
